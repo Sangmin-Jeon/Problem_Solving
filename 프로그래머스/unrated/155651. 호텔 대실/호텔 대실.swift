@@ -11,7 +11,7 @@ func solution(_ book_time:[[String]]) -> Int {
 
     loop: for time in times {
         for (idx, room) in rooms.enumerated() {
-            if !(room.0 ..< room.1 ~= time.0) {
+            if !(room.st ..< room.et ~= time.st) {
                 rooms[idx] = time
                 continue loop
             }
