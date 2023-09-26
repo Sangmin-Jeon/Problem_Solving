@@ -7,7 +7,7 @@ func solution(_ k: Int, _ dungeons: [[Int]]) -> Int {
     var result = [Int]()
     glbl_dungeons = dungeons
     glbl_visited = Array(repeating: false, count: dungeons.count)
-    return dfs(k: k, dungeons: [[]], depth: 0, result: &result )
+    return dfs(k: k, dungeons: [[]], depth: 0, result: &result)
 }
 
 func dfs(k: Int, dungeons: [[Int]], depth: Int, result: inout [Int]) -> Int {
@@ -28,5 +28,4 @@ func dfs(k: Int, dungeons: [[Int]], depth: Int, result: inout [Int]) -> Int {
     }
     
     return maxDepth
-    
 }
