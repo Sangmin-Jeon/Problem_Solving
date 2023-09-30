@@ -1,25 +1,24 @@
 import Foundation
 
 func solution(_ book_time:[[String]]) -> Int {
-    var times = [(st: Int, et: Int)]()
-    for _time in book_time {
-        times.append((st: _time[0].cT(), et: _time[1].cT() + 10))
-    }
-    var rooms = [(st: Int, et: Int)]()
-    times.sort(by: { $0.st < $1.st })
+    var answer = 0
+    var rooms = Array(repeating: 0, count: 1450) // 1450 = 24 * 60 + 10
     
-loop: for time in times {
-        for (idx, room) in rooms.enumerated() {
-            if !(room.st ..< room.et ~= time.st) {
-                rooms[idx] = time
-                continue loop
-            }
-        }
+    for time in book_time {
+        let inTime = time[0]
+        let outTime = time[1]
         
-        rooms.append((st: time.st ,et: time.et))
+        rooms[inTime.cT()] += 1
+        rooms[outTime.cT() + 10] -= 1 // 퇴실 시간 +10
     }
-
-    return rooms.count
+    
+    // 구간합
+    for i in 1 ..< 1450 {
+        rooms[i] += rooms[i - 1]
+        answer = max(answer, rooms[i])
+    }
+    
+    return answer
 }
 
 extension String {
