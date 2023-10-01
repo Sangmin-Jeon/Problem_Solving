@@ -1,31 +1,30 @@
 import Foundation
 
-var glbl_dungeons = [[Int]]()
-var glbl_visited = [Bool]()
-
-func solution(_ k: Int, _ dungeons: [[Int]]) -> Int {
-    var result = [Int]()
-    glbl_dungeons = dungeons
-    glbl_visited = Array(repeating: false, count: dungeons.count)
-    return dfs(k: k, dungeons: [[]], depth: 0, result: &result)
+var list = [[Int]]()
+func solution(_ k:Int, _ dungeons:[[Int]]) -> Int {
+    var visited = Array(repeating: false, count: dungeons.count)
+    return enterDungeon(k: k, dungeons: dungeons, visited: &visited, depth: 0)
 }
 
-func dfs(k: Int, dungeons: [[Int]], depth: Int, result: inout [Int]) -> Int {
-    var maxDepth = depth
+func enterDungeon(k: Int, dungeons:[[Int]], visited: inout [Bool], depth: Int) -> Int {
+    var result = depth
     
-    for (idx, dungeon) in glbl_dungeons.enumerated() {
-        if !glbl_visited[idx], dungeon.first! <= k {
-            glbl_visited[idx] = true
-            let _depth = dfs(
+    for (index, dungeon) in dungeons.enumerated() {
+        if !visited[index], k >= dungeon.first! {
+            visited[index] = true
+            list.append(dungeon)
+            let _depth = enterDungeon(
                 k: k - dungeon.last!,
-                dungeons: dungeons + [dungeon],
-                depth: depth + 1,
-                result: &result
+                dungeons: dungeons,
+                visited: &visited,
+                depth: depth + 1
             )
-            maxDepth = max(maxDepth, _depth)
-            glbl_visited[idx] = false
+            list.removeLast()
+            visited[index] = false
+            
+            result =  max(result, _depth)
         }
     }
     
-    return maxDepth
+    return result
 }
