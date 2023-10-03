@@ -16,7 +16,7 @@ func dfs(n int) int {
 		return fib
 	}
 	
-	memo[n] = solution(n - 1) + solution(n - 2)
+	memo[n] = dfs(n - 1) + dfs(n - 2)
 	return (memo[n] % 1234567)
 
 }
