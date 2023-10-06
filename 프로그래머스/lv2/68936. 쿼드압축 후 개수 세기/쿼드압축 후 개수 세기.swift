@@ -1,47 +1,44 @@
 import Foundation
-
 var totalZero = 0
 var totalOne = 0
 
-func solution(_ arr: [[Int]]) -> [Int] {
-    dfs(arr: arr, n: arr.count, r: 0, c: 0)
+func solution(_ arr:[[Int]]) -> [Int] {
+    dfs(arr: arr, row: 0, col: 0, size: arr.count)
     return [totalZero, totalOne]
 }
 
-func dfs(arr: [[Int]], n: Int, r: Int, c: Int) {
-    if n < 1 {
+func dfs(arr:[[Int]], row: Int, col: Int, size: Int)  { // z, o
+    if size < 1 {
         return
     }
-    
-    var one = 0
-    var zero = 0
-    
-    for i in r ..< r + n {
-        for j in c ..< c + n {
+
+    var zeroCnt = 0
+    var oneCnt = 0
+
+    for i in row ..< row + size {
+        for j in col ..< col + size {
             if arr[i][j] == 1 {
-                one += 1
+                oneCnt += 1
             }
             else {
-                zero += 1
+                zeroCnt += 1
             }
         }
     }
-    
-    if one == (n * n) {
+    if zeroCnt == (size * size) {
+        totalZero += 1 
+        return
+    }
+    if oneCnt == (size * size) {
         totalOne += 1
         return
     }
     
-    if zero == (n * n) {
-        totalZero += 1
-        return
-    }
-    
-    let halfSize = n / 2
-    
-    dfs(arr: arr, n: halfSize, r: r, c: c)
-    dfs(arr: arr, n: halfSize, r: r, c: (halfSize + c))
-    dfs(arr: arr, n: halfSize, r: (halfSize + r), c: c)
-    dfs(arr: arr, n: halfSize, r: (halfSize + r), c: (halfSize + c))
-    
+    let halfSize = (size / 2)
+
+    dfs(arr: arr, row: row, col: col, size: halfSize)
+    dfs(arr: arr, row: row, col: (halfSize + col), size: halfSize)
+    dfs(arr: arr, row: (halfSize + row), col: col, size: halfSize)
+    dfs(arr: arr, row: (halfSize + row), col: (halfSize + col), size: halfSize)
+ 
 }
