@@ -14,7 +14,7 @@ for _ in 0 ..< n {
 }
 
 
-func bfs(row: Int, col: Int, getGram: Bool) -> [Int] {
+func bfs(row: Int, col: Int) -> [Int] {
     let dr = [1, 0, -1, 0]
     let dc = [0, 1, 0, -1]
 
@@ -55,7 +55,7 @@ func bfs(row: Int, col: Int, getGram: Bool) -> [Int] {
 
 }
 
-let wayList = bfs(row: 0, col: 0, getGram: true)
+let wayList = bfs(row: 0, col: 0)
 let min = wayList.min() ?? 0
 if min == 0 || min > t {
     print("Fail")
