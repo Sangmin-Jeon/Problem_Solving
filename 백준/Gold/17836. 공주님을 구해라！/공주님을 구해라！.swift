@@ -59,7 +59,6 @@ let wayList = bfs(row: 0, col: 0)
 let min = wayList.min() ?? 0
 if min == 0 || min > t {
     print("Fail")
-}
-else {
+} else {
     print(min)
 }
