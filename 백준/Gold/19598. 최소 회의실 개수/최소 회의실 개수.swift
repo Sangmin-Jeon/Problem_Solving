@@ -10,12 +10,12 @@ for _ in 0 ..< n {
 
 }
 
-meetings.sort { (a: (Int, Int), b :(Int, Int)) -> Bool in
-    if a.0 == b.0 {
-        return a.1 < b.1
+meetings.sort {
+    if $0.0 == $1.0 {
+        return $0.1 < $1.1
     }
     else {
-        return a.0 < b.0
+        return $0.0 < $1.0
     }
 }
 
@@ -36,7 +36,7 @@ for meet in meetings {
 print(pQueue.count)
 
 
-// MARK: 우선순위 큐
+
 public struct PriorityQueue<T: Comparable> {
     private var heap: [T] = []
     private let order: (T, T) -> Bool
@@ -101,7 +101,3 @@ public struct PriorityQueue<T: Comparable> {
         return heap.first
     }
 }
-
- 
-
-
