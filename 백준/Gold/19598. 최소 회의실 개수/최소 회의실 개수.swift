@@ -1,5 +1,6 @@
 import Foundation
 
+// 입력
 let n = Int(readLine()!) ?? 0
 var meetings = [(Int, Int)]()
 for _ in 0 ..< n {
@@ -7,20 +8,19 @@ for _ in 0 ..< n {
         let _time = input.split(separator: " ").map({ Int($0)! })
         meetings.append((_time.first!, _time.last!))
     }
-
 }
 
-meetings.sort {
+// 시작 순으로 정렬, 시작 시간 같으면 끝 시간순으로 정렬
+meetings.sort(by: {
     if $0.0 == $1.0 {
         return $0.1 < $1.1
     }
-    else {
-        return $0.0 < $1.0
-    }
-}
+    return $0.0 < $1.0
+})
 
+// 우선 순위 Queue 선언 및 초기 설정
 var pQueue = PriorityQueue<Int>(order: <)
-pQueue.enqueue(meetings.removeFirst().1)
+pQueue.enqueue(meetings.removeFirst().1) // queue에는 끝 시간을 담음
 
 for meet in meetings {
     if meet.0 >= pQueue.peek()! {
@@ -28,15 +28,13 @@ for meet in meetings {
         pQueue.enqueue(meet.1)
         continue
     }
-
     pQueue.enqueue(meet.1)
-
 }
 
+// 출력
 print(pQueue.count)
 
-
-
+// MARK: 우선순위 Queue 구현 부 
 public struct PriorityQueue<T: Comparable> {
     private var heap: [T] = []
     private let order: (T, T) -> Bool
