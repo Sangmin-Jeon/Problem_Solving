@@ -1,37 +1,42 @@
 import Foundation
 
-var graph = [[Int]](repeating: [], count: 10001)
-var visited = [(Bool, [Int])](repeating: (false, []), count: 10001)
+// 입력에서 읽어온 노드 수를 저장
+let input = readLine()!.split(separator: " ").map { Int($0)! }
+let N = input[0]
+let M = input[1]
+
+// 그래프와 visited 배열을 동적으로 생성
+var graph = [[Int]](repeating: [], count: N + 1)
+var visited = [[Int]](repeating: [], count: N + 1)
+
 var start = 0
 var end = 0
 
 func bfs(_ s: Int, _ e: Int) {
     var queue = [Int]()
     queue.append(s)
-    visited[s].0 = true
+    visited[s] = [s]
+
     while !queue.isEmpty {
-        let x = queue.removeFirst()
-        visited[x].1.append(x)
-        if x == e {
+        let visit = queue.removeFirst()
+
+        if visit == e {
             return
         }
-        graph[x].sort()
-        for i in 0..<graph[x].count {
-            let nx = graph[x][i]
-            if !visited[nx].0 {
-                visited[nx].0 = true
-                visited[nx].1 = visited[x].1
-                queue.append(nx)
+
+        graph[visit].sort()
+
+        for i in 0..<graph[visit].count {
+            let new_visit = graph[visit][i]
+            if visited[new_visit].isEmpty {
+                visited[new_visit] = visited[visit] + [new_visit]
+                queue.append(new_visit)
             }
         }
     }
 }
 
-let input = readLine()!.split(separator: " ").map { Int($0)! }
-let N = input[0]
-let M = input[1]
-
-for _ in 1...M {
+for _ in 1 ... M {
     let edge = readLine()!.split(separator: " ").map { Int($0)! }
     let v1 = edge[0]
     let v2 = edge[1]
@@ -46,22 +51,23 @@ end = startEnd[1]
 var go = 0
 var back = 0
 bfs(start, end)
-go = visited[end].1.count - 1
-let visitedNodes = visited[end].1
+go = visited[end].count - 1
+let visitedNodes = visited[end]
 
-for i in 1...10000 {
-    visited[i].0 = false
-    visited[i].1.removeAll()
+// visited 배열 초기화
+for i in 1 ... N {
+    visited[i] = []
 }
 
-for i in 0..<visitedNodes.count {
-    let x = visitedNodes[i]
-    visited[x].0 = true
+for i in 0 ..< visitedNodes.count {
+    let visit = visitedNodes[i]
+    visited[visit] = [visit]
 }
-visited[start].0 = false
-visited[end].0 = false
+
+visited[start] = []
+visited[end] = []
 bfs(end, start)
-back = visited[start].1.count - 1
+back = visited[start].count - 1
 
 let totalPathLength = go + back
 print(totalPathLength)
