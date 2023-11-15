@@ -10,17 +10,14 @@ for _ in 0 ..< row {
 }
 
 var answer = 0
-var route = Array(repeating: false, count: 100)
-route[Int(UnicodeScalar(graph[0][0])!.value)] = true
 let dr = [1, 0, -1, 0]
 let dc = [0, 1, 0, -1]
 
 let mask = 1 << graph[0][0]
-dfs(&route, mask, (r: 0, c: 0), 1)
+dfs(mask, (r: 0, c: 0), 1)
 print(answer)
 
-func dfs(_ route: inout [Bool],
-         _ alphaMask: Int,
+func dfs(_ alphaMask: Int,
          _ dist: (r: Int, c: Int),
          _ depth: Int) {
 
@@ -33,7 +30,7 @@ func dfs(_ route: inout [Bool],
         if r >= 0, c >= 0, row > r, column > c {
             let ascii = 1 << graph[r][c]
             if alphaMask & ascii == 0 {
-                dfs(&route, alphaMask | ascii, (r: r, c: c), depth + 1)
+                dfs(alphaMask | ascii, (r: r, c: c), depth + 1)
                 
             }
         }
