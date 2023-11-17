@@ -2,10 +2,7 @@ import Foundation
 
 struct Station: Comparable {
     static func < (lhs: Station, rhs: Station) -> Bool {
-        if lhs.node == rhs.node {
-            return lhs.cost < rhs.cost
-        }
-        return lhs.node < rhs.node
+        lhs.node < rhs.node
     }
     let node: Int
     let cost: Int
@@ -13,7 +10,7 @@ struct Station: Comparable {
 
 func findShortestSubwayRoute() -> Int {
     var dist = Array(repeating: INF, count: stationCnt)
-    var pQueue = PriorityQueue<Station>(order: { $0.node < $1.node } )
+    var pQueue = PriorityQueue<Station>(order: <)
     pQueue.enqueue(Station(node: 0, cost: 0))
     dist[0] = 0
 
