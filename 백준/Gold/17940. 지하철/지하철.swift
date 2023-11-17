@@ -49,7 +49,7 @@ var corpInfo = [Int]()
 for _ in 0 ..< stationCnt {
     corpInfo.append(Int(readLine()!)!)
 }
-var graph = Array(repeating: [(Int, Int)](), count: 1000+2)
+var graph = Array(repeating: [(Int, Int)](), count: 1000)
 let IMP = 1000000
 let INF = 987654321
 
