@@ -1,3 +1,4 @@
+
 import Foundation
 
 var paper = [Int](repeating: 5, count: 5)
@@ -5,9 +6,6 @@ var result = 100
 var graph = [[Int]]()
 
 func canAttach(r: Int, c: Int, n: Int) -> Bool {
-    if r + n >= 10 || c + n >= 10 {
-        return false
-    }
     for _r in r ... r + n {
         for _c in c ... c + n {
             if graph[_r][_c] == 0 {
@@ -37,14 +35,6 @@ func fillPaper(r: Int, c: Int, n: Int, f: Int) {
     }
 }
 
-func range_check(r: Int, c: Int) -> Bool {
-	if r < 10 && c < 10 {
-        return true   
-    }
-	return false
-}
-
-
 func attachPaper(pCnt: Int) {
     if result < pCnt {
         return
@@ -52,7 +42,7 @@ func attachPaper(pCnt: Int) {
     
     if checkPaper() {
         if result > pCnt {
-            result = pCnt // 최소값 저장
+            result = pCnt
             return
         }
     }
@@ -61,7 +51,10 @@ func attachPaper(pCnt: Int) {
         for c in 0 ..< 10 {
             if graph[r][c] == 1 {
                 for n in (0...4).reversed() {
-                    if paper[n] > 0 && canAttach(r: r, c: c, n: n) && range_check(r: r + n, c: c + n) {
+                    if r >= 10, c >= 10 {
+                        return
+                    }
+                    if paper[n] > 0, r + n < 10, c + n < 10, canAttach(r: r, c: c, n: n) {
                         paper[n] -= 1
                         fillPaper(r: r, c: c, n: n, f: 0)
                         attachPaper(pCnt: pCnt + 1)
