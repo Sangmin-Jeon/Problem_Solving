@@ -13,7 +13,6 @@ func solution(_ cacheSize:Int, _ cities:[String]) -> Int {
         if DBCache.contains(_city) {
             if let idx = DBCache.firstIndex(of: _city) {
                 DBCache.remove(at: idx)
-                DBCache = [_city] + DBCache
                 time += 1
             }
         } 
@@ -21,9 +20,9 @@ func solution(_ cacheSize:Int, _ cities:[String]) -> Int {
             if DBCache.count == cacheSize {
                 DBCache.removeLast()
             }
-            DBCache = [_city] + DBCache
             time += 5
         }
+        DBCache = [_city] + DBCache
     }
 
     return time
