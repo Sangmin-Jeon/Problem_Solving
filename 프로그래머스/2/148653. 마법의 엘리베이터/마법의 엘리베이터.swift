@@ -11,7 +11,8 @@ func solution(_ storey:Int) -> Int {
         if n >= 6 || (n == 5 && (storey / 10) % 10 >= 5) {
             storey += 10 - n
             result += 10 - n
-        } else {
+        } 
+        else {
             result += n
         }
         storey /= 10
