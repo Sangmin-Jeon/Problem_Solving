@@ -1,4 +1,5 @@
 from functools import reduce
+import math
 
 def solution(numbers):
     answer = 0
@@ -26,17 +27,16 @@ def solution(numbers):
             
     return answer
 
-def is_prime_number(num):
-    if num <= 1:
-        return False
-    if num <= 3:
-        return True
-    if num % 2 == 0 or num % 3 == 0:
-        return False
-    i = 5
-    while i * i <= num:
-        if num % i == 0 or num % (i + 2) == 0:
-            return False
-        i += 6
-    return True
+
+def is_prime_number(m):
+    if m < 2:
+        return 0
+    elif m == 2:
+        return 1
+    if m % 2 == 0:
+        return 0
+    for i in range(3, int(math.sqrt(m)) + 1, 2):
+        if m % i == 0:
+            return 0
+    return 1
         
