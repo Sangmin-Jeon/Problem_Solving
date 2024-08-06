@@ -1,11 +1,8 @@
 def solution(array, commands):
     answer = []
-
     for command in commands:
-        i = command[0] - 1
-        j = command[1]
-        k = command[2] - 1
-
-        answer.append(sorted(array[i:j])[k])
-
+        i, j, k = command[0], command[1], command[2]
+        silce_answer = [array[i-1]] if i-1 == j else array[i-1:j]
+        silce_answer.sort()
+        answer.append(silce_answer[k-1])
     return answer
